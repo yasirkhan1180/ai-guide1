@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
-import { schemaTypes } from './schemaTypes'
+import { schemaTypes } from '../schemaTypes' // Go up one level to reach /sanity/schemaTypes
 import { codeInput } from '@sanity/code-input' // 1. Import this
 
 export default defineConfig({
