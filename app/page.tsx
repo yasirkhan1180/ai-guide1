@@ -2,11 +2,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ArticleCard from "./components/ArticleCard";
 import { getAllArticles } from "@/sanity/lib/fetch";
-import { Article } from "@/app/types"; // Ensure this import matches your file structure
+import { Post } from "@/app/types"; // Ensure this import matches your file structure
 
 export default async function HomePage() {
   // Fetching data
-  const articles: Article[] = await getAllArticles();
+  const articles: Post[] = await getAllArticles();
 
   return (
     <>
@@ -49,8 +49,8 @@ export default async function HomePage() {
 
           <div className="max-w-3xl space-y-8">
             {articles.length > 0 ? (
-              articles.map((article: Article) => (
-                <ArticleCard key={article._id} article={article} />
+              articles.map((article: Post) => (
+                <ArticleCard key={article.slug} article={article} />
               ))
             ) : (
               <p className="text-gray-400 py-10 text-center">No articles found in the database.</p>

@@ -1,11 +1,11 @@
 // app/types.ts
-export interface Article {
-  _id: string;
-  title: string;
+export interface Post {
   slug: string;
-  categoryTag: string;
+  title: string;
   excerpt: string;
+  category: string; // Ensure this is exactly "category"
   readTime: number;
-  publishedAt: string;
+  date: string;
   author: string;
+  content: string;
 }

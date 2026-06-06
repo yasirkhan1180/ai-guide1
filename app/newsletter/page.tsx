@@ -1,68 +1,51 @@
-import type { Metadata } from "next";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+"use client"; // REQUIRED for forms and event handlers
 
-export const metadata: Metadata = {
-  title: "Newsletter",
-  description: "Subscribe to the AI-guide newsletter.",
-};
+import { useState } from 'react';
 
 export default function NewsletterPage() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  // Event handler for form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      // Simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setStatus('success');
+      setEmail('');
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
   return (
-    <>
-      <Header />
-      <main className="pt-14">
-        <div className="max-w-site mx-auto px-6 md:px-12 pt-20 pb-14">
-          <div className="max-w-article">
-            {/* Overline */}
-            <p
-              className="font-sans text-[0.65rem] font-600 uppercase tracking-widest text-accent mb-8"
-              style={{ letterSpacing: "0.2em" }}
-            >
-              Newsletter
-            </p>
+    <div className="max-w-2xl mx-auto py-12 px-6">
+      <h1 className="text-3xl font-bold mb-4">Subscribe to AI Guide</h1>
+      <p className="mb-8 text-gray-600">Get the latest insights on biotechnology and AI delivered to your inbox.</p>
+      
+      <form onSubmit={handleSubmit} className="flex gap-4">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
+          required
+          className="flex-1 border p-2 rounded"
+        />
+        <button 
+          type="submit" 
+          disabled={status === 'loading'}
+          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+        >
+          {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+        </button>
+      </form>
 
-            <h1
-              className="font-sans font-700 text-display-md text-ink mb-6"
-              style={{ letterSpacing: "-0.025em" }}
-            >
-              New articles,
-              <br />
-              in your inbox.
-            </h1>
-
-            <p className="font-serif text-[1.0625rem] text-ink-soft leading-relaxed italic mb-12">
-              No summaries, no roundups. When we publish something worth
-              reading, we&apos;ll send it to you directly.
-            </p>
-
-            {/* Subscription form */}
-            <div className="border-t border-border pt-10">
-              <form
-                className="flex flex-col sm:flex-row gap-3"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="flex-1 font-sans text-sm border border-border bg-white px-4 py-3 text-ink placeholder:text-slate-400 focus:outline-none focus:border-ink transition-colors duration-200"
-                />
-                <button
-                  type="submit"
-                  className="font-sans text-xs font-600 uppercase tracking-widest px-8 py-3 bg-ink text-bg hover:bg-accent transition-colors duration-200 whitespace-nowrap"
-                  style={{ letterSpacing: "0.1em" }}
-                >
-                  Subscribe
-                </button>
-              </form>
-              <p className="font-sans text-xs text-muted mt-4">
-                No spam. One email per new article. Unsubscribe at any time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </>
+      {status === 'success' && <p className="mt-4 text-green-600">Thanks for subscribing!</p>}
+      {status === 'error' && <p className="mt-4 text-red-600">Something went wrong. Please try again.</p>}
+    </div>
   );
 }

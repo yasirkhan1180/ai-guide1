@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import { Article } from "@/app/types"; // Import your interface
-
-export default function ArticleCard({ article }: { article: Article }) {
+import { Post } from "@/app/types";
+export default function ArticleCard({ article }: { article: Post }) {
   // Use the interface to safely access fields
   if (!article) return null;
 
